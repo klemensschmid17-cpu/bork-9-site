@@ -2,7 +2,7 @@
   "name": "BORK-9",
   "symbol": "BORK9",
   "description": "BORK-9 is an original dog-powered orbital arcade token. Fixed supply, 0% transfer fee, no freeze authority, and mint authority revoked at creation.",
-  "image": "https://bork-9.com/bork9-logo.svg",
+  "image": "https://bork-9.com/bork9-logo-space-dog.png",
   "external_url": "https://bork-9.com",
   "attributes": [
     { "trait_type": "Network", "value": "Solana" },
@@ -15,8 +15,8 @@
     "category": "fungible-token",
     "files": [
       {
-        "uri": "https://bork-9.com/bork9.json",
-        "type": "image/svg+xml"
+        "uri": "https://bork-9.com/bork9-logo-space-dog.png",
+        "type": "image/png"
       }
     ]
   }
