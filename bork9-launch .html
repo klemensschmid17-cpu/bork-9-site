@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>BORK-9 · Mint Console</title>
+    <style>
+      :root { --ink:#eaf1ff; --muted:#9eb0cc; --line:rgba(202,222,255,.16); --panel:#0c1d42; --deep:#040d23; --lime:#c6ff3d; --gold:#ffd66e; --bad:#ff8d7c; }
+      * { box-sizing:border-box; }
+      body { min-height:100vh; margin:0; color:var(--ink); font:15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:radial-gradient(circle at 88% 8%,rgba(105,76,231,.23),transparent 24rem), radial-gradient(circle at 8% 85%,rgba(198,255,61,.09),transparent 21rem), var(--deep); }
+      main { width:min(760px,calc(100% - 32px)); margin:0 auto; padding:58px 0 76px; }
+      .eyebrow { margin:0 0 8px; color:var(--lime); font-size:11px; font-weight:900; letter-spacing:.13em; text-transform:uppercase; }
+      h1 { margin:0; font-size:clamp(37px,7vw,68px); line-height:.95; letter-spacing:-.075em; }
+      .lead { max-width:650px; margin:18px 0 32px; color:#b9c8e2; }
+      .card { margin:18px 0; padding:25px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(135deg,rgba(18,45,94,.88),rgba(7,19,47,.94)); box-shadow:0 20px 50px rgba(0,0,0,.23); }
+      h2 { margin:0 0 15px; font-size:20px; letter-spacing:-.04em; }
+      .spec { display:grid; grid-template-columns:1fr auto; gap:11px 20px; padding:16px 0; border-top:1px solid var(--line); }
+      .spec:last-child { padding-bottom:0; }
+      .spec span { color:var(--muted); }
+      .spec b { text-align:right; }
+      .notice { padding:15px 16px; border:1px solid rgba(255,214,110,.28); border-radius:14px; color:#e4e9f4; background:rgba(122,92,21,.16); font-size:13px; }
+      .notice strong { color:var(--gold); }
+      button { width:100%; min-height:55px; margin-top:14px; border:0; border-radius:14px; cursor:pointer; color:#0b1a03; background:var(--lime); font:800 14px/1 Inter,ui-sans-serif,system-ui,sans-serif; letter-spacing:.02em; transition:transform .16s ease,filter .16s ease; }
+      button:hover:not(:disabled) { filter:brightness(1.06); transform:translateY(-1px); }
+      button:disabled { cursor:not-allowed; color:#899ab6; background:#263856; }
+      .status { min-height:25px; margin:16px 0 0; color:var(--muted); font-size:13px; }
+      .status.good { color:var(--lime); } .status.bad { color:var(--bad); }
+      .result { display:none; margin-top:16px; padding:16px; border:1px solid rgba(198,255,61,.35); border-radius:14px; background:rgba(198,255,61,.08); }
+      .result.visible { display:block; }
+      .result a { color:var(--lime); overflow-wrap:anywhere; }
+      ol { margin:12px 0 0; padding-left:20px; color:#c9d5e9; }
+      li + li { margin-top:8px; }
+      code { padding:2px 5px; border-radius:5px; background:rgba(255,255,255,.08); color:#eaf1ff; font-family:"SFMono-Regular",Consolas,monospace; font-size:.9em; }
+      .small { color:var(--muted); font-size:12px; }
+      @media (max-width:540px) { main { padding-top:38px; } .card { padding:20px; } .spec { grid-template-columns:1fr; gap:2px; } .spec b { text-align:left; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">BORK-9 · Mainnet mint console</p>
+      <h1>One transparent<br />mint transaction.</h1>
+      <p class="lead">This console builds an atomic Solana transaction in your browser. It never sees or stores a seed phrase or private key. Phantom shows the transaction; only you can approve it.</p>
+
+      <section class="card" aria-labelledby="spec-title">
+        <h2 id="spec-title">Fixed BORK9 specification</h2>
+        <div class="spec"><span>Token</span><b>BORK-9 · BORK9</b></div>
+        <div class="spec"><span>Program</span><b>Classic SPL Token</b></div>
+        <div class="spec"><span>Total supply</span><b>1,000,000,000 BORK9</b></div>
+        <div class="spec"><span>Decimals / transfer fee</span><b>6 / 0%</b></div>
+        <div class="spec"><span>Creator allocation</span><b>200,000,000 (20%)</b></div>
+        <div class="spec"><span>Treasury &amp; future rewards</span><b>200,000,000 (20%)</b></div>
+        <div class="spec"><span>Liquidty reserved in deployer wallet</span><b>600,000,000 (60%)</b></div>
+        <div class="spec"><span>Freeze authority</span><b>None from creation</b></div>
+        <div class="spec"><span>Mint authority</span><b>Revoked in the same transaction</b></div>
+      </section>
+
+      <section class="card">
+        <h2>Before you sign</h2>
+        <div class="notice"><strong>Open this page in Phantom's in-app browser.</strong> Connect only the confirmed Creator / Deployer wallet. Keep enough SOL for network rent and the token-metadata protocol fee. This action creates the token and the allocations only; it does not create a pool, take public payments, or promise game rewards.</div>
+        <ol>
+          <li>First upload <code>bork9.json</code> and <code>bork9-logo.svg</code> beside this file on <code>bork-9.com</code>.</li>
+          <li>Open <code>https://bork-9.com/bork9-launch.html</code> in the Phantom browser.</li>
+          <li>Connect the Creator / Deployer wallet and approve the single transaction after reviewing it.</li>
+          <li>Save the mint address and transaction link displayed here. The next step is a separate public liquidity-pool transaction.</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <h2>Mint BORK9</h2>
+        <p class="small">The button is enabled only after the correct Creator / Deployer wallet connects and the public metadata file can be checked.</p>
+        <button id="connect" type="button">Connect Creator wallet</button>
+        <button id="mint" type="button" disabled>Mint fixed-supply BORK9</button>
+        <p id="status" class="status" role="status">Not connected.</p>
+        <div id="result" class="result" aria-live="polite"></div>
+      </section>
+
+      <p class="small">Security check: this page has no token-sale, transfer-tax, blacklist, permanent-delegate, or wallet-draining logic. It creates exactly the allocations shown above, sets no freeze authority, and permanently removes the ability to mint more BORK9 after the full supply is issued.</p>
+    </main>
+
+    <script type="module">
+      import {
+        Connection, PublicKey, Keypair, SystemProgram, Transaction, SYSVAR_RENT_PUBKEY
+      } from "https://esm.sh/@solana/web3.js@1.98.4?bundle";
+      import {
+        TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, MINT_SIZE, AuthorityType,
+        getAssociatedTokenAddressSync, createAssociatedTokenAccountInstruction,
+        createInitializeMint2Instruction, createMintToInstruction,
+        createTransferInstruction, createSetAuthorityInstruction
+      } from "https://esm.sh/@solana/spl-token@0.4.13?bundle";
+      import { createCreateMetadataAccountV3Instruction } from "https://esm.sh/@metaplex-foundation/mpl-token-metadata@3.4.0?bundle";
+
+      const RPC_URL = "https://api.mainnet-beta.solana.com";
+      const CREATOR_DEPLOYER = "HUwB9LvwzCk6bQnLwF4EJDbFKGDN7JXo9WFuP4Lt9aFB";
+      const TREASURY_REWARDS = "8Yy4RnknQcG3ogazzvj4bt4i6r81vFzrQeGYBgpGaMxE";
+      const METADATA_URI = "https://bork-9.com/bork9.json";
+      const METADATA_PROGRAM = new PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s");
+      const DECIMALS = 6;
+      const TOTAL_SUPPLY = 1_000_000_000n * 10n ** BigInt(DECIMALS);
+      const TREASURY_REWARDS_AMOUNT = 200_000_000n * 10n ** BigInt(DECIMALS);
+      const connection = new Connection(RPC_URL, "confirmed");
+      const creator = new PublicKey(CREATOR_DEPLOYER);
+      const treasury = new PublicKey(TREASURY_REWARDS);
+      let provider;
+
+      const connectButton = document.querySelector("#connect");
+      const mintButton = document.querySelector("#mint");
+      const status = document.querySelector("#status");
+      const result = document.querySelector("#result");
+
+      function setStatus(message, kind = "") {
+        status.textContent = message;
+        status.className = `status ${kind}`;
+      }
+
+      function walletProvider() {
+        return window.phantom?.solana || window.solana || null;
+      }
+
+      async function verifyMetadata() {
+        const response = await fetch(METADATA_URI, { cache: "no-store" });
+        if (!response.ok) throw new Error("bork9.json is not public at bork-9.com yet.");
+        const metadata = await response.json();
+        if (metadata.name !== "BORK-9" || metadata.symbol !== "BORK9" || !metadata.image) {
+          throw new Error("bork9.json does not contain the expected BORK-9 metadata.");
+        }
+      }
+
+      async function connectWallet() {
+        provider = walletProvider();
+        if (!provider?.isPhantom) {
+          setStatus("Open this page inside Phantom's in-app browser, then try again.", "bad");
+          return;
+        }
+        try {
+          setStatus("Checking public metadata …");
+          await verifyMetadata();
+          setStatus("Connecting wallet …");
+          const response = await provider.connect();
+          if (response.publicKey.toBase58() !== CREATOR_DEPLOYER) {
+            provider.disconnect?.();
+            throw new Error("This is not the confirmed Creator / Deployer wallet.");
+          }
+          connectButton.textContent = "Creator wallet connected";
+          connectButton.disabled = true;
+          mintButton.disabled = false;
+          setStatus("Correct Creator / Deployer wallet connected. Review the final transaction carefully before approving.", "good");
+        } catch (error) {
+          setStatus(error.message || "Wallet connection failed.", "bad");
+        }
+      }
+
+      function metadataInstruction(mint) {
+        const [metadata] = PublicKey.findProgramAddressSync(
+          [new TextEncoder().encode("metadata"), METADATA_PROGRAM.toBuffer(), mint.toBuffer()],
+          METADATA_PROGRAM
+        );
+        return createCreateMetadataAccountV3Instruction(
+          {
+            metadata,
+            mint,
+            mintAuthority: creator,
+            payer: creator,
+            updateAuthority: creator,
+            systemProgram: SystemProgram.programId,
+            rent: SYSVAR_RENT_PUBKEY
+          },
+          {
+            createMetadataAccountArgsV3: {
+              data: {
+                name: "BORK-9",
+                symbol: "BORK9",
+                uri: METADATA_URI,
+                sellerFeeBasisPoints: 0,
+                creators: null,
+                collection: null,
+                uses: null
+              },
+              isMutable: false,
+              collectionDetails: null
+            }
+          },
+          METADATA_PROGRAM
+        );
+      }
+
+      async function mintToken() {
+        if (!provider?.publicKey || provider.publicKey.toBase58() !== CREATOR_DEPLOYER) {
+          setStatus("Connect the confirmed Creator / Deployer wallet first.", "bad");
+          return;
+        }
+        try {
+          mintButton.disabled = true;
+          setStatus("Building a single atomic mainnet transaction …");
+          await verifyMetadata();
+          const mint = Keypair.generate();
+          const creatorAta = getAssociatedTokenAddressSync(mint.publicKey, creator, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
+          const treasuryAta = getAssociatedTokenAddressSync(mint.publicKey, treasury, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
+          const rent = await connection.getMinimumBalanceForRentExemption(MINT_SIZE);
+          const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash("confirmed");
+
+          const transaction = new Transaction({ feePayer: creator, recentBlockhash: blockhash });
+          transaction.add(
+            SystemProgram.createAccount({
+              fromPubkey: creator,
+              newAccountPubkey: mint.publicKey,
+              lamports: rent,
+              space: MINT_SIZE,
+              programId: TOKEN_PROGRAM_ID
+            }),
+            createInitializeMint2Instruction(mint.publicKey, DECIMALS, creator, null, TOKEN_PROGRAM_ID),
+            createAssociatedTokenAccountInstruction(creator, creatorAta, creator, mint.publicKey, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID),
+            createAssociatedTokenAccountInstruction(creator, treasuryAta, treasury, mint.publicKey, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID),
+            metadataInstruction(mint.publicKey),
+            createMintToInstruction(mint.publicKey, creatorAta, creator, TOTAL_SUPPLY, [], TOKEN_PROGRAM_ID),
+            createTransferInstruction(creatorAta, treasuryAta, creator, TREASURY_REWARDS_AMOUNT, [], TOKEN_PROGRAM_ID),
+            createSetAuthorityInstruction(mint.publicKey, creator, AuthorityType.MintTokens, null, [], TOKEN_PROGRAM_ID)
+          );
+          transaction.partialSign(mint);
+          setStatus("Approve only if Phantom shows the token creation, allocation, and authority-revocation transaction.");
+          const signed = await provider.signTransaction(transaction);
+          const signature = await connection.sendRawTransaction(signed.serialize(), { skipPreflight: false, maxRetries: 3 });
+          setStatus("Waiting for mainnet confirmation …");
+          const confirmation = await connection.confirmTransaction({ signature, blockhash, lastValidBlockHeight }, "confirmed");
+          if (confirmation.value.err) throw new Error("The transaction was rejected by Solana: " + JSON.stringify(confirmation.value.err));
+          const mintAddress = mint.publicKey.toBase58();
+          result.classList.add("visible");
+          result.innerHTML = `<strong>BORK9 minted successfully.</strong><br />Mint: <a href="https://explorer.solana.com/address/${mintAddress}" target="_blank" rel="noreferrer">${mintAddress}</a><br />Transaction: <a href="https://explorer.solana.com/tx/${signature}" target="_blank" rel="noreferrer">View confirmed transaction</a>`;
+          setStatus("Confirmed. Keep the mint address; do not launch a pool until the on-chain fields have been checked.", "good");
+        } catch (error) {
+          mintButton.disabled = false;
+          setStatus(error.message || "Mint transaction failed before confirmation.", "bad");
+        }
+      }
+
+      connectButton.addEventListener("click", connectWallet);
+      mintButton.addEventListener("click", mintToken);
+    </script>
+  </body>
+</html>
